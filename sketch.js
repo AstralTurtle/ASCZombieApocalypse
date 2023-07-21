@@ -17,7 +17,7 @@ let playerImage;
 let zombieImage;
 let fieldImage;
 let zombieArray = [];
-let zombieCountMax;
+let zombieCountMax = 5;
 
 function preload() {
   playerImage = loadImage("player.png");
@@ -90,16 +90,33 @@ function draw() {
     // rect(300, 50, 100, 100);
     // rect(100, 350, 100, 100);
     // detect player and
+    
+    let resultX = cornerSpawnerX(0, 500);
+    let resultY = cornerSpawnerY(0, 500);
     for (let i = 0; i < zombieCountMax; i++) {
-      let temp = new Zombie(cornerSpawnerX(0, 500), cornerSpawnerY(0, 500), 1.5);
+      let temp = new Zombie(resultX, resultY, 10);
       zombieArray.push(temp);
     }
 
     for (let i = 0; i < zombieArray.length; i++) {
       image(zombieImage, zombieArray[i].xPos, zombieArray[i].yPos, 30, 30);
-      
-      zombieArray[i].xPos += zombieArray[i].speedValue;
-      zombieArray[i].yPos += zombieArray[i].speedValue;
+
+      if (resultX == 0 && resultY == 0) {
+        zombieArray[i].xPos += zombieArray[i].speedValue;
+        zombieArray[i].yPos += zombieArray[i].speedValue;
+      }
+      if (resultX == 0 && resultY == 500) {
+        zombieArray[i].xPos += zombieArray[i].speedValue;
+        zombieArray[i].yPos -= zombieArray[i].speedValue;
+      }
+      if (resultX == 500 && resultY == 0) {
+        zombieArray[i].xPos -= zombieArray[i].speedValue;
+        zombieArray[i].yPos += zombieArray[i].speedValue;
+      }
+      if (resultX == 500 && resultY == 500) {
+        zombieArray[i].xPos -= zombieArray[i].speedValue;
+        zombieArray[i].yPos -= zombieArray[i].speedValue;
+      }
     }
     
      for (let i = 0; i < zombieArray.length; i++) {
